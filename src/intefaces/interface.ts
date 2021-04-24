@@ -1,11 +1,21 @@
 export interface Mapbox {
-  latitude: 45.4211;
-  longitude: -75.6903;
+  latitude: number;
+  longitude: number;
   zoom: 10;
   width: "100%";
   height: "100%";
 }
 
-export interface SearcLocation {
+export interface SearchLocationInterface {
   sendValue: (value: string) => void;
+}
+
+export interface MapRootInterface {
+  lat: number;
+  long: number;
+}
+
+export interface MapDisplayInterface {
+  lat: number;
+  long: number;
 }

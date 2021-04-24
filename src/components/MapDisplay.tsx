@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactMapGl, { Marker } from "react-map-gl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
-import { Mapbox } from "../intefaces/interface";
+import { Mapbox, MapDisplayInterface } from "../intefaces/interface";
 
 import styles from "./MapDisplay.module.css";
 
-const App: React.FC = () => {
+const App: React.FC<MapDisplayInterface> = (props) => {
   const [viewport, setViewPort] = useState<Mapbox>({
-    latitude: 45.4211,
-    longitude: -75.6903,
+    latitude: 0,
+    longitude: 0,
     zoom: 10,
     width: "100%",
     height: "100%",
   });
+
+  useEffect(() => {
+    setViewPort((prevState) => {
+      return {
+        ...prevState,
+        latitude: props.lat,
+        longitude: props.long,
+      };
+    });
+  }, [props]);
+
   return (
     <div className={styles.mapbox_container}>
       <ReactMapGl
@@ -22,7 +33,7 @@ const App: React.FC = () => {
         onViewportChange={(viewport: Mapbox) => setViewPort(viewport)}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       >
-        <Marker latitude={45.4211} longitude={-75.6903}>
+        <Marker latitude={props.lat} longitude={props.long}>
           <FontAwesomeIcon icon={faMapPin} size="3x" color="white" />
         </Marker>
       </ReactMapGl>
