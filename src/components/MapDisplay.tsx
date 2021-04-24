@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactMapGl, { Marker } from "react-map-gl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
-import { Mapbox } from "../intefaces/mapbox-interface";
+import { Mapbox } from "../intefaces/interface";
 
 import styles from "./MapDisplay.module.css";
 

@@ -12,11 +12,21 @@
 .search_input {
   width: 40%;
   margin: 10px auto;
-  font-size: 1.54rem;
+  font-size: 1.34rem;
   padding: 0px 10px;
   color: saddlebrown;
   outline: none;
   border: none;
+  border-radius: 3px;
+  border-bottom: 1px solid saddlebrown;
+}
+
+.search_input:focus {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid saddlebrown;
+  background-color: rgb(0, 0, 0, 0.6);
+  color: white;
 }
 
 .search_button {

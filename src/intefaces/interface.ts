@@ -5,3 +5,7 @@ export interface Mapbox {
   width: "100%";
   height: "100%";
 }
+
+export interface SearcLocation {
+  sendValue: (value: string) => void;
+}
