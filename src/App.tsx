@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import ReactMapGl, { Marker } from "react-map-gl";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapPin } from "@fortawesome/free-solid-svg-icons";
 import { Mapbox } from "./intefaces/mapbox-interface";
 import "./App.css";
 
@@ -18,7 +20,11 @@ const App: React.FC = () => {
         mapStyle="mapbox://styles/sudosdm/cknvrogsv1vt217jgicvef63y"
         onViewportChange={(viewport: Mapbox) => setViewPort(viewport)}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-      ></ReactMapGl>
+      >
+        <Marker latitude={45.4211} longitude={-75.6903}>
+          <FontAwesomeIcon icon={faMapPin} size="3x" color="white" />
+        </Marker>
+      </ReactMapGl>
     </div>
   );
 };
