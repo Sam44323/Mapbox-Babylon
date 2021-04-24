@@ -1,0 +1,38 @@
+* {
+  font-family: PT Sans, sans-serif;
+}
+
+.search_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.search_input {
+  width: 40%;
+  margin: 10px auto;
+  font-size: 1.54rem;
+  padding: 0px 10px;
+  color: saddlebrown;
+  outline: none;
+  border: none;
+}
+
+.search_button {
+  width: 10%;
+  margin: 17px auto;
+  padding: 4px 0px;
+  font-size: 1.15rem;
+  outline: none;
+  border: none;
+  background-color: salmon;
+  letter-spacing: 1px;
+  border-radius: 10px;
+}
+
+.search_button:hover {
+  background-color: rgb(136, 42, 32);
+  color: white;
+  cursor: pointer;
+}

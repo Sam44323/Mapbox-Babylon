@@ -1,5 +1,7 @@
 .mapbox_container {
-  width: 70%;
-  height: 90vh;
+  width: 90%;
+  height: 95vh;
+  overflow: hidden;
   margin: 0px auto;
+  border-radius: 10px;
 }
