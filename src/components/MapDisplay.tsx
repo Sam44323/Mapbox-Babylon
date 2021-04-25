@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import mapboxGl from "mapbox-gl";
+import { Canvas } from "@react-three/fiber";
 import ReactMapGl, { Marker } from "react-map-gl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +11,15 @@ import {
 } from "../intefaces/interfaces";
 
 import styles from "./MapDisplay.module.css";
+
+const Box: React.FC = () => {
+  return (
+    <mesh>
+      <boxBufferGeometry attach="geometry" />
+      <meshLambertMaterial attach="material" color="hotpink" />
+    </mesh>
+  );
+};
 
 const App: React.FC<MapDisplayInterface> = (props) => {
   const [viewport, setViewPort] = useState<Mapbox>({
@@ -75,6 +85,7 @@ const App: React.FC<MapDisplayInterface> = (props) => {
     });
     setSnapShot(map.getCanvas().toDataURL());
   }, [viewport]);
+
   return (
     <>
       <div className={styles.mapButtonSection}>
@@ -101,6 +112,9 @@ const App: React.FC<MapDisplayInterface> = (props) => {
           <h1 style={{ textAlign: "center" }}>No Snap Yet!</h1>
         )}
       </div>
+      <Canvas>
+        <Box />
+      </Canvas>
     </>
   );
 };
