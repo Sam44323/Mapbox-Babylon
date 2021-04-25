@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactMapGl, { Marker } from "react-map-gl";
-import html2canvas from "html2canvas";
+// import html2canvas from "html2canvas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
 import {
