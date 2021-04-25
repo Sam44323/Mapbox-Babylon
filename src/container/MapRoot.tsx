@@ -24,7 +24,6 @@ const MapRoot: React.FC = () => {
   }, []);
   return (
     <>
-      {console.log(searchedLocation)}
       <SearchLocation sendValue={getLocation} />
       <MapDisplay lat={searchedLocation?.lat!} long={searchedLocation?.long!} />
     </>

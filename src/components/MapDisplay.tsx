@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
+import mapboxGl from "mapbox-gl";
 import ReactMapGl, { Marker } from "react-map-gl";
-import html2canvas from "html2canvas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -25,9 +25,10 @@ const App: React.FC<MapDisplayInterface> = (props) => {
     long: 0,
   });
 
-  const [snapShot, setSnapShot] = useState("");
+  const [snapshot, setSnapShot] = useState("");
 
   useEffect(() => {
+    mapboxGl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN as string;
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         setViewPort((prevState) => {
@@ -60,14 +61,21 @@ const App: React.FC<MapDisplayInterface> = (props) => {
   }, [props]);
 
   const takeSnapshot = useCallback(() => {
-    const divEl = document.getElementById(
-      "map-container__div"
-    ) as HTMLDivElement;
-    html2canvas(divEl).then((canvas) => {
-      console.log(canvas.toDataURL());
+    mapboxGl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN as string;
+    let map = new mapboxGl.Map({
+      container: "snap-container",
+      style: "mapbox://styles/sudosdm/cknvrogsv1vt217jgicvef63y",
+      center: {
+        lat: viewport.latitude,
+        lng: viewport.longitude,
+      },
+      zoom: viewport.zoom,
+      preserveDrawingBuffer: true,
+      interactive: false,
     });
-  }, []);
-
+    console.log("snapshot");
+    setSnapShot(map.getCanvas().toDataURL());
+  }, [viewport]);
   return (
     <>
       <div className={styles.mapButtonSection}>
@@ -75,17 +83,23 @@ const App: React.FC<MapDisplayInterface> = (props) => {
           Take Snapshot
         </button>
       </div>
-      <div className={styles.mapbox_container} id="map-container__div">
-        <ReactMapGl
-          {...viewport}
-          mapStyle="mapbox://styles/sudosdm/cknvrogsv1vt217jgicvef63y"
-          onViewportChange={(viewport: Mapbox) => setViewPort(viewport)}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        >
-          <Marker latitude={pointer.lat} longitude={pointer.long}>
-            <FontAwesomeIcon icon={faMapPin} size="3x" color="white" />
-          </Marker>
-        </ReactMapGl>
+      <div id="snap-container" className={styles.snapshotContainer}>
+        {snapshot ? (
+          <img src={snapshot} alt="imageValue" />
+        ) : (
+          <div className={styles.mapbox_container} id="map-container__div">
+            <ReactMapGl
+              {...viewport}
+              mapStyle="mapbox://styles/sudosdm/cknvrogsv1vt217jgicvef63y"
+              onViewportChange={(viewport: Mapbox) => setViewPort(viewport)}
+              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+            >
+              <Marker latitude={pointer.lat} longitude={pointer.long}>
+                <FontAwesomeIcon icon={faMapPin} size="3x" color="white" />
+              </Marker>
+            </ReactMapGl>
+          </div>
+        )}
       </div>
     </>
   );
