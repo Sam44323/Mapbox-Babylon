@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import ReactMapGl, { Marker } from "react-map-gl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
-import { Mapbox, MapDisplayInterface } from "../intefaces/interface";
+import {
+  Mapbox,
+  MapDisplayInterface,
+  PointerStateInterface,
+} from "../intefaces/interface";
 
 import styles from "./MapDisplay.module.css";
 
@@ -15,6 +19,29 @@ const App: React.FC<MapDisplayInterface> = (props) => {
     height: "100%",
   });
 
+  const [pointer, setPointer] = useState<PointerStateInterface>({
+    lat: 0,
+    long: 0,
+  });
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setViewPort((prevState) => {
+          return {
+            ...prevState,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          };
+        });
+        setPointer({
+          lat: position.coords.latitude,
+          long: position.coords.longitude,
+        });
+      });
+    }
+  }, []);
+
   useEffect(() => {
     setViewPort((prevState) => {
       return {
@@ -22,6 +49,10 @@ const App: React.FC<MapDisplayInterface> = (props) => {
         latitude: props.lat,
         longitude: props.long,
       };
+    });
+    setPointer({
+      lat: props.lat,
+      long: props.long,
     });
   }, [props]);
 
@@ -33,7 +64,7 @@ const App: React.FC<MapDisplayInterface> = (props) => {
         onViewportChange={(viewport: Mapbox) => setViewPort(viewport)}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       >
-        <Marker latitude={props.lat} longitude={props.long}>
+        <Marker latitude={pointer.lat} longitude={pointer.long}>
           <FontAwesomeIcon icon={faMapPin} size="3x" color="white" />
         </Marker>
       </ReactMapGl>

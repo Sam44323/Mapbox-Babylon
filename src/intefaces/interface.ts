@@ -19,3 +19,8 @@ export interface MapDisplayInterface {
   lat: number;
   long: number;
 }
+
+export interface PointerStateInterface {
+  lat: number;
+  long: number;
+}
