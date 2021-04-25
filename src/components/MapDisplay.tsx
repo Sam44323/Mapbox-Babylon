@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactMapGl, { Marker } from "react-map-gl";
+import html2canvas from "html2canvas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -57,18 +58,23 @@ const App: React.FC<MapDisplayInterface> = (props) => {
   }, [props]);
 
   return (
-    <div className={styles.mapbox_container}>
-      <ReactMapGl
-        {...viewport}
-        mapStyle="mapbox://styles/sudosdm/cknvrogsv1vt217jgicvef63y"
-        onViewportChange={(viewport: Mapbox) => setViewPort(viewport)}
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-      >
-        <Marker latitude={pointer.lat} longitude={pointer.long}>
-          <FontAwesomeIcon icon={faMapPin} size="3x" color="white" />
-        </Marker>
-      </ReactMapGl>
-    </div>
+    <>
+      <div className={styles.mapButtonSection}>
+        <button className={styles.mapContainerButton}>Take Snapshot</button>
+      </div>
+      <div className={styles.mapbox_container} id="map-container__div">
+        <ReactMapGl
+          {...viewport}
+          mapStyle="mapbox://styles/sudosdm/cknvrogsv1vt217jgicvef63y"
+          onViewportChange={(viewport: Mapbox) => setViewPort(viewport)}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        >
+          <Marker latitude={pointer.lat} longitude={pointer.long}>
+            <FontAwesomeIcon icon={faMapPin} size="3x" color="white" />
+          </Marker>
+        </ReactMapGl>
+      </div>
+    </>
   );
 };
 
