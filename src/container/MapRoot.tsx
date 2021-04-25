@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import axios from "axios";
 
-import { MapRootInterface } from "../intefaces/interface";
+import { MapRootInterface } from "../intefaces/interfaces";
 import MapDisplay from "../components/MapDisplay";
 import SearchLocation from "../components/SearchLocation";
 

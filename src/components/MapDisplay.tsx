@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import ReactMapGl, { Marker } from "react-map-gl";
-// import html2canvas from "html2canvas";
+import html2canvas from "html2canvas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
 import {
   Mapbox,
   MapDisplayInterface,
   PointerStateInterface,
-} from "../intefaces/interface";
+} from "../intefaces/interfaces";
 
 import styles from "./MapDisplay.module.css";
 
@@ -24,6 +24,8 @@ const App: React.FC<MapDisplayInterface> = (props) => {
     lat: 0,
     long: 0,
   });
+
+  const [snapShot, setSnapShot] = useState("");
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -57,10 +59,21 @@ const App: React.FC<MapDisplayInterface> = (props) => {
     });
   }, [props]);
 
+  const takeSnapshot = useCallback(() => {
+    const divEl = document.getElementById(
+      "map-container__div"
+    ) as HTMLDivElement;
+    html2canvas(divEl).then((canvas) => {
+      console.log(canvas.toDataURL());
+    });
+  }, []);
+
   return (
     <>
       <div className={styles.mapButtonSection}>
-        <button className={styles.mapContainerButton}>Take Snapshot</button>
+        <button className={styles.mapContainerButton} onClick={takeSnapshot}>
+          Take Snapshot
+        </button>
       </div>
       <div className={styles.mapbox_container} id="map-container__div">
         <ReactMapGl

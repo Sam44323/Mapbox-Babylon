@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from "react";
 
-import { SearchLocationInterface } from "../intefaces/interface";
+import { SearchLocationInterface } from "../intefaces/interfaces";
 import styles from "./SearchLocation.module.css";
 
 const SearchLocation: React.FC<SearchLocationInterface> = (props) => {
