@@ -73,7 +73,6 @@ const App: React.FC<MapDisplayInterface> = (props) => {
       preserveDrawingBuffer: true,
       interactive: false,
     });
-    console.log("snapshot");
     setSnapShot(map.getCanvas().toDataURL());
   }, [viewport]);
   return (
@@ -83,22 +82,23 @@ const App: React.FC<MapDisplayInterface> = (props) => {
           Take Snapshot
         </button>
       </div>
+      <div className={styles.mapbox_container} id="map-container__div">
+        <ReactMapGl
+          {...viewport}
+          mapStyle="mapbox://styles/sudosdm/cknvrogsv1vt217jgicvef63y"
+          onViewportChange={(viewport: Mapbox) => setViewPort(viewport)}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        >
+          <Marker latitude={pointer.lat} longitude={pointer.long}>
+            <FontAwesomeIcon icon={faMapPin} size="3x" color="white" />
+          </Marker>
+        </ReactMapGl>
+      </div>
       <div id="snap-container" className={styles.snapshotContainer}>
         {snapshot ? (
           <img src={snapshot} alt="imageValue" />
         ) : (
-          <div className={styles.mapbox_container} id="map-container__div">
-            <ReactMapGl
-              {...viewport}
-              mapStyle="mapbox://styles/sudosdm/cknvrogsv1vt217jgicvef63y"
-              onViewportChange={(viewport: Mapbox) => setViewPort(viewport)}
-              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-            >
-              <Marker latitude={pointer.lat} longitude={pointer.long}>
-                <FontAwesomeIcon icon={faMapPin} size="3x" color="white" />
-              </Marker>
-            </ReactMapGl>
-          </div>
+          <h1 style={{ textAlign: "center" }}>No Snap Yet!</h1>
         )}
       </div>
     </>

@@ -7,6 +7,10 @@
   border-radius: 10px;
 }
 
+.snapshotContainer {
+  margin-top: 3rem;
+}
+
 .mapButtonSection {
   text-align: center;
 }
